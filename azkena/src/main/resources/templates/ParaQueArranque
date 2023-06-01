@@ -1,0 +1,10 @@
+DROP SCHEMA IF EXISTS BD_EVENTO;
+CREATE SCHEMA BD_EVENTO DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+
+-- *********************************************
+-- ************ CREACIÓN USUARIO ***************
+-- *********************************************
+DROP USER IF EXISTS 'KUKO'@'localhost';
+CREATE USER 'KUKO'@'localhost' IDENTIFIED BY 'TWgf0j_08ojrD';
+GRANT ALL PRIVILEGES ON BD_EVENTO.* TO 'KUKO'@'localhost';
+

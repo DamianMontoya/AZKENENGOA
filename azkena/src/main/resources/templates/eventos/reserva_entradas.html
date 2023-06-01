@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${titulo}">RESERVA ENTRADAS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Spring Boot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" th:href="@{/index}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/eventos/listar}">Eventos</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/contacto}">Contacto</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <input type="hidden" th:field="*{id}" />
+    <h1 class="text-secondary border border-success border-top-0 border-left-0 border-right-0" th:text="${titulo}"></h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>nombre</th>
+            <th>artistas</th>
+            <th>fecha</th>
+            <th>hora</th>
+            <th>Plazas</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="evento: ${eventos}">
+            <td sec:authorize="hasRole('ADMIN')" th:text="${evento.id}"></td>
+            <td th:text="${evento.nombre}"></td>
+            <td th:text="${evento.artistas}"></td>
+            <td th:text="${evento.fecha}"></td>
+            <td th:text="${evento.hora}"></td>
+            <td th:text="${evento.plazas}"></td>
+            <td>
+                <form th:action="@{/otra-direccion}" method="post">
+                    <div class="form-group">
+                        <select class="form-control" name="numero">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="Seleccionar" class="btn btn-primary">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="position: fixed; bottom: 0;">
+    <h2 th:inline="text">¡Hola <span th:remove="tag" sec:authentication="name">usuario</span>!</h2>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Cerrar sesión"/>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

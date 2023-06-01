@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${titulo}">PÁGINA DE CONTACTO</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<h1>Nafar Lansare</h1>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Spring Boot</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" th:href="@{/index}">HOME</a>
+      </li>
+      <li class="nav-item"><a class="nav-link" th:href="@{/eventos/listar}">LISTADO EVENTOS</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h1>ZER DA HAU</h1>
+
+<div style="position: fixed; bottom: 0;">
+  <h2 th:inline="text">¡Hola <span th:remove="tag" sec:authentication="name">usuario</span>!</h2>
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="Cerrar sesión"/>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

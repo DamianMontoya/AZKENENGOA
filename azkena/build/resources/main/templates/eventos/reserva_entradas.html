@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${titulo}">RESERVA ENTRADAS</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Spring Boot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" th:href="@{/index}">Home</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/eventos/listar}">Eventos</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/contacto}">Contacto</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1
+            class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
+            th:text="${titulo}"></h1>
+    <p sec:authorize="hasRole('ADMIN')"><a  th:href="@{/eventos/pruebaformulario}" class="btn btn-success btn-xs">crear evento</a></p>
+    <p sec:authorize="hasRole('ADMIN')"><a  th:href="@{/clientes/listar}" class="btn btn-success btn-xs">Listado de Usuarios</a></p>
+    <p ><a  th:href="@{/clientes/form}" class="btn btn-success btn-xs">Regístrate para reservar entradas</a></p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th sec:authorize="hasRole('ADMIN')">id</th>
+            <th>nombre</th>
+            <th>artistas</th>
+            <th>fecha</th>
+            <th>hora</th>
+            <th>Plazas</th>
+            <th sec:authorize="hasRole('USER')">Reservar entradas</th>
+            <th sec:authorize="hasRole('ADMIN')">editar</th>
+            <th sec:authorize="hasRole('ADMIN')">eliminar</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="evento: ${eventos}">
+            <td sec:authorize="hasRole('ADMIN')" th:text="${evento.id}"></td>
+            <td th:text="${evento.nombre}"></td>
+            <td th:text="${evento.artistas}"></td>
+            <td th:text="${evento.fecha}"></td>
+            <td th:text="${evento.hora}"></td>
+            <td th:text="${evento.plazas}"></td>
+            <td sec:authorize="hasRole('USER')"><a class="btn btn-primary btn-xs" th:href="@{/reserva_entradas}" th:text="'Reservar entradas'"></a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-primary btn-xs" th:href="@{/eventos/pruebaformulario/} + ${evento.id}" th:text="'editar'"></a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger btn-xs" th:href="@{/eventos/eliminar/} + ${evento.id}" th:text="'eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+<div style="position: fixed; bottom: 0;">
+    <h2 th:inline="text">¡Hola <span th:remove="tag" sec:authentication="name">usuario</span>!</h2>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Cerrar sesión"/>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
